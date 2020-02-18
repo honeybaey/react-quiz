@@ -1,14 +1,11 @@
-import axios from "../../axios/axios-quiz";
-import { 
-  FETCH_QUIZES_START, 
-  FETCH_QUIZES_SUCCESS, 
-  FETCH_QUIZES_ERROR, 
+import axios from '../../axios/axios-quiz'
+import {
   FETCH_QUIZ_SUCCESS,
-  QUIZ_SET_STATE,
-  FINISH_QUIZ,
-  QUIZ_NEXT_QUESTION,
-  QUIZ_RETRY
-} from "./actionTypes";
+  FETCH_QUIZES_ERROR,
+  FETCH_QUIZES_START,
+  FETCH_QUIZES_SUCCESS, FINISH_QUIZ, QUIZ_NEXT_QUESTION, QUIZ_RETRY,
+  QUIZ_SET_STATE
+} from './actionTypes'
 
 export function fetchQuizes() {
   return async dispatch => {
@@ -23,11 +20,11 @@ export function fetchQuizes() {
           id: key,
           name: `Тест №${index + 1}`
         })
+      })
 
-        dispatch(fetchQuizesSuccess(quizes))
-      });
-    } catch (error) {
-      dispatch(fetchQuizesError(error));
+      dispatch(fetchQuizesSuccess(quizes))
+    } catch (e) {
+      dispatch(fetchQuizesError(e))
     }
   }
 }
@@ -41,9 +38,8 @@ export function fetchQuizById(quizId) {
       const quiz = response.data
 
       dispatch(fetchQuizSuccess(quiz))
-
-    } catch (error) {
-      dispatch(fetchQuizesError(error))
+    } catch (e) {
+      dispatch(fetchQuizesError(e))
     }
   }
 }
@@ -68,10 +64,10 @@ export function fetchQuizesSuccess(quizes) {
   }
 }
 
-export function fetchQuizesError(error) {
+export function fetchQuizesError(e) {
   return {
     type: FETCH_QUIZES_ERROR,
-    error
+    error: e
   }
 }
 
@@ -120,7 +116,7 @@ export function quizAnswerClick(answerId) {
         results[question.id] = 'success'
       }
 
-      dispatch(quizSetState({[answerId] : 'success'}, results))
+      dispatch(quizSetState({[answerId]: 'success'}, results))
 
       const timeout = window.setTimeout(() => {
         if (isQuizFinished(state)) {
@@ -128,13 +124,11 @@ export function quizAnswerClick(answerId) {
         } else {
           dispatch(quizNextQuestion(state.activeQuestion + 1))
         }
-
         window.clearTimeout(timeout)
       }, 1000)
-
     } else {
       results[question.id] = 'error'
-      dispatch(quizSetState({[answerId] : 'error'}, results))
+      dispatch(quizSetState({[answerId]: 'error'}, results))
     }
   }
 }
