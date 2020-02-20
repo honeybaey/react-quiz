@@ -1,4 +1,4 @@
-    link to the app - https://react-quiz-1aa16.web.app/
+    [link to the app](https://react-quiz-1aa16.web.app/)
 
 # react-quiz
 =======
